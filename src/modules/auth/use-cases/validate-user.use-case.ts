@@ -15,10 +15,9 @@ export class ValidateUserUseCase {
   ): Promise<Omit<UserEntity, 'password'>> {
     const user = await this.findUserByEmailUseCase.execute(email);
     if (user && user.password && (await bcrypt.compare(pass, user.password))) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
     }
-    throw new UnauthorizedException('Invalid credentials');
+    throw new UnauthorizedException('Credenciais inválidas.');
   }
 }

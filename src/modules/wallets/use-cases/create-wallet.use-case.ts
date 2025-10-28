@@ -13,4 +13,12 @@ export class CreateWalletUseCase {
 
     await this.walletRepository.save(wallet);
   }
+
+  async create(userId: number, balance: number) {
+    const wallet = this.walletRepository.create({
+      userId,
+      balance,
+    });
+    return await this.walletRepository.save(wallet);
+  }
 }

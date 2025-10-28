@@ -11,10 +11,10 @@ import {
 
 @Entity('wallets')
 export class WalletEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
   id: number;
 
-  @Column({ name: 'user_id' })
+  @Column({ name: 'user_id', unique: true, type: 'int' })
   userId: number;
 
   @Column({
@@ -29,10 +29,10 @@ export class WalletEntity {
   })
   balance: number;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
 
   @OneToOne(() => UserEntity, (user) => user.wallet)

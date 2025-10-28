@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateUsers1698000000001 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -16,23 +16,20 @@ export class CreateUsers1698000000001 implements MigrationInterface {
           { name: 'name', type: 'varchar' },
           { name: 'email', type: 'varchar', isUnique: true },
           { name: 'password', type: 'varchar' },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
         ],
       }),
       true,
     );
-
-    await queryRunner.addColumns('users', [
-      new TableColumn({
-        name: 'created_at',
-        type: 'timestamp',
-        default: 'now()',
-      }),
-      new TableColumn({
-        name: 'updated_at',
-        type: 'timestamp',
-        default: 'now()',
-      }),
-    ]);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

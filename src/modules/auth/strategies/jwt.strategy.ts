@@ -14,8 +14,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    // O payload é o que definimos no login.use-case
-    // Ele será anexado ao objeto `request`
     return { id: payload.sub, email: payload.email };
   }
 }

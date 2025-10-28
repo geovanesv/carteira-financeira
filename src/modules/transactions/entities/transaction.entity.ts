@@ -3,8 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 
 @Entity('transactions')
@@ -30,7 +28,7 @@ export class TransactionEntity {
   amount: number;
 
   @Column()
-  status: 'completed' | 'reversed';
+  status: 'completo' | 'revertido';
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

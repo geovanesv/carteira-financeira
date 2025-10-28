@@ -1,22 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { WalletRepository } from '../repositories/wallet.repository';
-import { BalanceDto } from '../dto/balance.dto';
 
 @Injectable()
-export class GetBalanceUseCase {
+export class UpdateWalletUseCase {
   constructor(private readonly walletRepository: WalletRepository) {}
 
-  async execute(userId: number) {
-    const wallet = await this.walletRepository.findOneBy({ userId });
+  async execute(userId: number, amount: number) {
+    const wallet = await this.walletRepository.findOne({ where: { userId } });
 
     if (!wallet) {
       throw new NotFoundException('Carteira não encontrada.');
     }
 
-    return wallet;
-  }
+    wallet.balance += amount;
 
-  async getAllWallets() {
-    return this.walletRepository.find();
+    const updatedWallet = await this.walletRepository.save(wallet);
+
+    return updatedWallet;
   }
 }

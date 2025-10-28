@@ -12,13 +12,15 @@ export class CreateUserUseCase {
     private readonly createWalletUseCase: CreateWalletUseCase,
   ) {}
 
-  async execute(createUserDto: CreateUserDto): Promise<Omit<UserEntity, 'password'>> {
+  async execute(
+    createUserDto: CreateUserDto,
+  ): Promise<Omit<UserEntity, 'password'>> {
     const existingUser = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email already exists.');
+      throw new ConflictException('Já existe um usuário com este e-mail.');
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);

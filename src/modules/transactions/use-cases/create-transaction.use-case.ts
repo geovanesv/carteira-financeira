@@ -21,7 +21,9 @@ export class CreateTransactionUseCase {
     const { payeeId, amount } = createTransactionDto;
 
     if (payerId === payeeId) {
-      throw new BusinessException('Payer and payee cannot be the same person.');
+      throw new BusinessException(
+        'O pagador e o beneficiário não podem ser a mesma pessoa.',
+      );
     }
 
     const payerWallet = await this.walletRepository.findOne({
@@ -32,7 +34,9 @@ export class CreateTransactionUseCase {
     });
 
     if (!payerWallet || !payeeWallet) {
-      throw new NotFoundException('Payer or payee wallet not found.');
+      throw new NotFoundException(
+        'Carteira do pagador ou beneficiário não encontrada.',
+      );
     }
 
     if (payerWallet.balance < amount) {
@@ -54,7 +58,7 @@ export class CreateTransactionUseCase {
         payerWalletId: payerWallet.id,
         payeeWalletId: payeeWallet.id,
         amount,
-        status: 'completed',
+        status: 'completo',
       });
 
       const savedTransaction = await queryRunner.manager.save(transaction);

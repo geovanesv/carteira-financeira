@@ -22,7 +22,7 @@ export class CreateTransactions1698000000003 implements MigrationInterface {
           { name: 'payer_wallet_id', type: 'int' },
           { name: 'payee_wallet_id', type: 'int' },
           { name: 'amount', type: 'decimal', precision: 10, scale: 2 },
-          { name: 'status', type: 'varchar' }, // completed, reversed
+          { name: 'status', type: 'varchar' },
           { name: 'created_at', type: 'timestamp', default: 'now()' },
         ],
       }),

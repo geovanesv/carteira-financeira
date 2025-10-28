@@ -18,11 +18,11 @@ export class ReverseTransactionUseCase {
     });
 
     if (!transaction) {
-      throw new NotFoundException('Transaction not found.');
+      throw new NotFoundException('Transação não encontrada.');
     }
 
-    if (transaction.status === 'reversed') {
-      throw new BusinessException('Transaction has already been reversed.');
+    if (transaction.status === 'revertido') {
+      throw new BusinessException('A transação já foi revertida.');
     }
 
     const payerWallet = await this.walletRepository.findOne({
@@ -33,18 +33,20 @@ export class ReverseTransactionUseCase {
     });
 
     if (!payerWallet || !payeeWallet) {
-      throw new NotFoundException('Payer or payee wallet not found.');
+      throw new NotFoundException(
+        'Carteira do pagador ou beneficiário não encontrada.',
+      );
     }
 
     if (requesterId !== payerWallet.userId) {
       throw new BusinessException(
-        'Only the payer can reverse the transaction.',
+        'Somente o pagador pode reverter a transação.',
       );
     }
 
     if (payeeWallet.balance < transaction.amount) {
       throw new BusinessException(
-        'Payee does not have enough balance to reverse the transaction.',
+        'O beneficiário não tem saldo suficiente para reverter a transação.',
       );
     }
 
@@ -55,15 +57,15 @@ export class ReverseTransactionUseCase {
     try {
       payerWallet.balance = Number(payerWallet.balance) + transaction.amount;
       payeeWallet.balance = Number(payeeWallet.balance) - transaction.amount;
-      transaction.status = 'reversed';
+      transaction.status = 'revertido';
 
       await queryRunner.manager.save([payerWallet, payeeWallet, transaction]);
       await queryRunner.commitTransaction();
 
-      return { message: 'Transaction reversed successfully.' };
+      return { message: 'Transação revertida com sucesso.' };
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      throw new BusinessException('Transaction reversal failed.');
+      throw new BusinessException('A reversão da transação falhou.');
     } finally {
       await queryRunner.release();
     }
