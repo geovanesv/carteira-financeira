@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Serviço da API NestJS
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wallet-api-app
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  # Serviço do Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:13
+    container_name: wallet-postgres
+    restart: always
+    ports:
+      - '${DB_PORT}:5432'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
