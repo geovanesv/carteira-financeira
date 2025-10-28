@@ -7,24 +7,34 @@ import {
   UpdateDateColumn,
   OneToOne,
 } from 'typeorm';
+import { ApiProperty, ApiHideProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export class UserEntity {
+  @ApiProperty({ description: 'O ID único do usuário', example: 1 })
   @PrimaryGeneratedColumn({ name: 'id', type: 'int', unsigned: true })
   id: number;
 
-  @Column()
+  @ApiProperty({ description: 'O nome do usuário', example: 'João da Silva' })
+  @Column({ name: 'name', type: 'varchar' })
   name: string;
 
+  @ApiProperty({
+    description: 'O e-mail único do usuário',
+    example: 'joao.silva@example.com',
+  })
   @Column({ name: 'email', type: 'varchar', unique: true })
   email: string;
 
-  @Column()
-  password?: string;
+  @ApiHideProperty() // Esconde a senha da documentação
+  @Column({ name: 'password', type: 'varchar' })
+  password: string;
 
+  @ApiProperty()
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 
+  @ApiProperty()
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
 
