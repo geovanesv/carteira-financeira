@@ -10,15 +10,15 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
-  synchronize: false, // Nunca use `true` em produção
+  synchronize: false,
   logging: false,
   migrationsTableName: 'migrations',
 });
 
 AppDataSource.initialize()
   .then(() => {
-    console.log('Data Source has been initialized!');
+    console.log('DataSource Inicializado!');
   })
   .catch((err) => {
-    console.error('Error during Data Source initialization', err);
+    console.error('Erro durante a inicialização do DataSource: ', err);
   });

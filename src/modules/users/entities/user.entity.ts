@@ -26,7 +26,7 @@ export class UserEntity {
   @Column({ name: 'email', type: 'varchar', unique: true })
   email: string;
 
-  @ApiHideProperty() // Esconde a senha da documentação
+  @ApiHideProperty()
   @Column({ name: 'password', type: 'varchar' })
   password: string;
 
