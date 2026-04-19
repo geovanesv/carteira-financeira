@@ -33,17 +33,9 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-  let document = SwaggerModule.createDocument(app, config, {
+  const document = SwaggerModule.createDocument(app, config, {
     extraModels: [UserEntity, WalletEntity, TransactionEntity],
   });
-
-  if (document?.components?.schemas) {
-    for (const schemaName of Object.keys(document.components.schemas)) {
-      if (schemaName.toLowerCase().includes('dto')) {
-        delete document.components.schemas[schemaName];
-      }
-    }
-  }
 
   SwaggerModule.setup('api-docs', app, document);
 

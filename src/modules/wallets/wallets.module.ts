@@ -1,12 +1,13 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WalletsController } from './wallets.controller';
+import { WalletsController } from './adapters/controllers/wallets.controller';
 import { WalletEntity } from './entities/wallet.entity';
-import { WalletRepository } from './repositories/wallet.repository';
-import { GetBalanceUseCase } from './use-cases/get-balance.use-case';
-import { CreateWalletUseCase } from './use-cases/create-wallet.use-case';
+import { WalletRepository } from './infrastructure/data/repositories/wallet.repository';
+import { WalletDomainService } from './domain/services/wallet.domain.service';
+import { GetBalanceUseCase } from './application/use-cases/get-balance.use-case';
+import { CreateWalletUseCase } from './application/use-cases/create-wallet.use-case';
 import { AuthModule } from '../auth/auth.module';
-import { UpdateWalletUseCase } from './use-cases/updated-wallet.use-case';
+import { UpdateWalletUseCase } from './application/use-cases/update-wallet.use-case';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UpdateWalletUseCase } from './use-cases/updated-wallet.use-case';
   controllers: [WalletsController],
   providers: [
     WalletRepository,
+    WalletDomainService,
     GetBalanceUseCase,
     CreateWalletUseCase,
     UpdateWalletUseCase,
@@ -25,6 +27,7 @@ import { UpdateWalletUseCase } from './use-cases/updated-wallet.use-case';
     CreateWalletUseCase,
     GetBalanceUseCase,
     UpdateWalletUseCase,
+    WalletDomainService,
   ],
 })
 export class WalletsModule {}

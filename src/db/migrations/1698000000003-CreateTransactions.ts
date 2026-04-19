@@ -3,7 +3,6 @@ import {
   QueryRunner,
   Table,
   TableForeignKey,
-  TableColumn,
 } from 'typeorm';
 
 export class CreateTransactions1698000000003 implements MigrationInterface {

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersController } from './users.controller';
+import { UsersController } from './adapters/controllers/users.controller';
 import { UserEntity } from './entities/user.entity';
-import { UserRepository } from './repositories/user.repository';
-import { CreateUserUseCase } from './use-cases/create-user.use-case';
-import { FindUserByEmailUseCase } from './use-cases/find-user-by-email.use-case';
-import { FindUserByIdUseCase } from './use-cases/find-user-by-id.use-case';
+import { UserRepository } from './infrastructure/data/repositories/user.repository';
+import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
+import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-email.use-case';
+import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id.use-case';
 import { WalletsModule } from '../wallets/wallets.module';
 
 @Module({
@@ -17,6 +17,6 @@ import { WalletsModule } from '../wallets/wallets.module';
     FindUserByEmailUseCase,
     FindUserByIdUseCase,
   ],
-  exports: [FindUserByEmailUseCase, FindUserByIdUseCase],
+  exports: [UserRepository, FindUserByEmailUseCase, FindUserByIdUseCase],
 })
 export class UsersModule {}
