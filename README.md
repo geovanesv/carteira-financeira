@@ -1,73 +1,141 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Carteira Financeira API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API RESTful para gerenciamento de carteiras financeiras, desenvolvida com NestJS. Este projeto permite que usuários se autentiquem, criem e gerenciem suas carteiras, consultem saldos e realizem transações.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Tecnologias Utilizadas
 
-## Description
+- **NestJS**: Um framework progressivo Node.js para a construção de aplicações do lado do servidor eficientes, escaláveis e confiáveis.
+- **TypeORM**: Um ORM (Object Relational Mapper) que pode ser executado em NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo e Electron, e suporta MySQL, PostgreSQL, Microsoft SQL Server, Oracle, SAP Hana, SQLite, MariaDB, Aurora MySQL, Aurora PostgreSQL, CockroachDB e MongoDB.
+- **PostgreSQL**: Sistema de gerenciamento de banco de dados objeto-relacional poderoso, de código aberto. (Assumido como o banco de dados principal, comum com TypeORM).
+- **Swagger (OpenAPI)**: Para documentação interativa da API.
+- **JWT (JSON Web Tokens)**: Para autenticação segura de usuários.
+- **Bcrypt**: Para hashing seguro de senhas.
+- **Class-validator & Class-transformer**: Para validação e transformação de dados em DTOs.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## ✨ Funcionalidades
 
-## Installation
+- **Autenticação de Usuários**: Registro e login de usuários com JWT.
+- **Gestão de Carteiras**:
+  - Criação de carteiras para usuários.
+  - Consulta do saldo da carteira.
+  - Atualização do saldo (adição/remoção de valores).
+- **Gestão de Transações**: (Módulo previsto, mas sem implementação detalhada no contexto fornecido)
+  - Registro de transações financeiras.
+  - Consulta do histórico de transações.
 
-```bash
-$ npm install
+## 📂 Estrutura do Projeto
+
+O projeto segue a arquitetura modular do NestJS, organizada da seguinte forma:
+
+```
+src/
+├── main.ts                 # Ponto de entrada da aplicação e configuração global (Swagger, Pipes)
+├── app.module.ts           # Módulo raiz da aplicação
+├── config/                 # Configurações específicas (app, jwt)
+│   ├── app.config.ts
+│   └── jwt.config.ts
+├── modules/
+│   ├── auth/               # Módulo de autenticação
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── guards/
+│   │   ├── strategies/
+│   │   └── use-cases/
+│   ├── users/              # Módulo de usuários
+│   │   ├── entities/
+│   │   └── use-cases/
+│   ├── wallets/            # Módulo de carteiras
+│   │   ├── controllers/
+│   │   ├── dto/
+│   │   ├── entities/
+│   │   ├── repositories/
+│   │   └── use-cases/
+│   └── transactions/       # Módulo de transações (placeholder)
+│       └── entities/
+└── db/
+    └── data-source.ts      # Configuração do TypeORM DataSource
 ```
 
-## Running the app
+## 🛠️ Configuração e Execução
 
-```bash
-# development
-$ npm run start
+### Pré-requisitos
 
-# watch mode
-$ npm run start:dev
+- Node.js (versão 16 ou superior)
+- npm ou Yarn
+- Um servidor PostgreSQL em execução
 
-# production mode
-$ npm run start:prod
+### Instalação
+
+1.  Clone o repositório:
+    ```bash
+    git clone https://github.com/geovanesv/carteira-financeira.git
+    cd carteira-financeira
+    ```
+2.  Instale as dependências:
+    ```bash
+    npm install # ou yarn install
+    ```
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```dotenv
+APP_PORT=3000
+DATABASE_URL="postgresql://user:password@host:5432/database_name"
+JWT_SECRET="sua_chave_secreta_jwt_aqui"
+JWT_EXPIRES_IN="1h"
 ```
 
-## Test
+### Banco de Dados
+
+Certifique-se de que seu banco de dados PostgreSQL esteja em execução e acessível.
+
+Para executar as migrações (se houver, para criar as tabelas):
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Exemplo de comando para rodar migrações com TypeORM (se configurado)
+# npm run typeorm migration:run
 ```
 
-## Support
+### Executando a Aplicação
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Modo de Desenvolvimento**:
 
-## Stay in touch
+  ```bash
+  npm run start:dev
+  ```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  A aplicação será recarregada automaticamente a cada alteração de código.
 
-## License
+- **Modo de Produção**:
+  ```bash
+  npm run build
+  npm run start
+  ```
 
-Nest is [MIT licensed](LICENSE).
+## 📖 Documentação da API (Swagger)
+
+Após iniciar a aplicação, a documentação interativa da API estará disponível em:
+
+`http://localhost:<APP_PORT>/api-docs`
+
+Por exemplo, se `APP_PORT` for `3000`, acesse `http://localhost:3000/api-docs`.
+
+## 🔑 Endpoints Principais
+
+- `POST /auth/login`: Autentica um usuário e retorna um token JWT.
+- `GET /wallets/balance`: Retorna o saldo da carteira do usuário autenticado.
+- `POST /wallets/create`: Cria uma nova carteira para o usuário autenticado.
+- `PATCH /wallets/update`: Atualiza o saldo da carteira do usuário autenticado.
+
+## 👤 Autor
+
+**Geovane**
+
+- GitHub: geovanesv
+- Email: geovane.dev@gmail.com
+
+```
+
+```
